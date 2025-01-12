@@ -1,0 +1,12 @@
+.header {
+}
+
+.link {
+  font-weight: 400;
+  line-height: 1.25;
+  color: #121417;
+}
+
+.active {
+  color: #f4c550;
+}
