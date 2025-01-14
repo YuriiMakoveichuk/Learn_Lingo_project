@@ -26,7 +26,7 @@
 .spanTitle {
   font-style: italic;
   font-weight: 400;
-  background-color: #9fbaae;
+  background-color: #fbe9ba;
 }
 
 .text {
@@ -44,7 +44,7 @@
   padding: 16px 88px;
   width: 267px;
   height: 60px;
-  background-color: #9fbaae;
+  background-color: #f4c550;
   font-weight: 700;
   font-size: 18px;
   line-height: 1.55556;
@@ -54,7 +54,7 @@
 
 .link:hover,
 link:focus {
-  background-color: #cbded3;
+  background-color: #fbe9ba;
 }
 
 .boxImg {
@@ -68,8 +68,6 @@ link:focus {
   border-radius: 30px;
   padding: 40px 122px;
   gap: 100px;
-  /* width: 1312px;
-  height: 116px; */
 }
 
 .itemInfo {
@@ -88,6 +86,4 @@ link:focus {
   line-height: 1.28571;
   letter-spacing: -0.02em;
   color: rgba(18, 20, 23, 0.7);
-  /* display: flex;
-  flex-wrap: wrap; */
 }
