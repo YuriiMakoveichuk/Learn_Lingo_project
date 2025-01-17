@@ -2,11 +2,28 @@ import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 
 import logo from "../../assets/img/ukraine.svg";
-// import sprite from "../../assets/img/sprite.svg";
+import sprite from "../../assets/img/sprite.svg";
 
 import css from "./Navigation.module.css";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal, selectIsOpenModal } from "../../redux/modal.js";
+import LoginModal from "../LoginModal/LoginModal.jsx";
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+
+  const isOpenModal = useSelector(selectIsOpenModal);
+
+  const modalType = useSelector((state) => state.modal.modalType);
+
+  const isOpenModalRegister = () => {
+    dispatch(openModal("register"));
+  };
+
+  const isOpenModalLogin = () => {
+    dispatch(openModal("login"));
+  };
   return (
     <>
       <header className={css.header}>
@@ -34,18 +51,29 @@ const Navigation = () => {
             </NavLink>
           </nav>
           <div className={css.boxBtn}>
-            <button className={css.btnLogin} type="button">
+            <button
+              className={css.btnLogin}
+              type="button"
+              onClick={isOpenModalLogin}
+            >
               <svg className={css.svg} width={20} height={20}>
-                <use href={`../../assets/img/sprite.svg#icon-log_in`}></use>
+                <use href={`${sprite}#icon-log_in`}></use>
               </svg>
               <p>Log in</p>
             </button>
-            <button className={css.btnRegister} type="button">
+            <button
+              className={css.btnRegister}
+              type="button"
+              onClick={isOpenModalRegister}
+            >
               Registration
             </button>
           </div>
         </div>
       </header>
+      {isOpenModal && modalType === "register" && <RegisterModal />}
+
+      {isOpenModal && modalType === "login" && <LoginModal />}
     </>
   );
 };
