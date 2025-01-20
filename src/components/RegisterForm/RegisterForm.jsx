@@ -1,21 +1,35 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import css from "./RegisterForm.module.css";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import { closeModal } from "../../redux/modal.js";
+import { setUser } from "../../redux/auth/slice.js";
 
 import sprite from "../../assets/img/sprite.svg";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../../redux/modal.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { setUser } from "../../redux/auth/slice.js";
+
+import css from "./RegisterForm.module.css";
 
 const validateSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
-  email: yup.string().email().required("Email is required"),
+  email: yup
+    .string()
+    .email()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email must contain '@' and '.'")
+    .required("Email is required"),
   password: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
+    .min(
+      6,
+      "Password must be at least 6 characters, with at least 2 of them being uppercase letters"
+    )
+    .matches(
+      /(?=.*[A-Z].*[A-Z])/,
+      "Password must contain at least 2 uppercase letters"
+    )
     .required("Password is required"),
 });
 
@@ -45,8 +59,6 @@ const RegisterForm = () => {
   const handleRegister = ({ email, password }) => {
     const auth = getAuth();
 
-    console.log(password);
-
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -58,16 +70,12 @@ const RegisterForm = () => {
           })
         );
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error during registration:", error);
+      });
     dispatch(closeModal());
     reset();
   };
-
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   dispatch(closeModal());
-  //   reset();
-  // };
 
   return (
     <form onSubmit={handleSubmit(handleRegister)} autoComplete="off" noValidate>
@@ -80,7 +88,7 @@ const RegisterForm = () => {
             placeholder="Name"
           />
         </label>
-        {errors.name && <p>{errors.name.message}</p>}
+        {errors.name && <p className={css.error}>{errors.name.message}</p>}
 
         <label htmlFor="email">
           <input
@@ -90,7 +98,7 @@ const RegisterForm = () => {
             placeholder="Email"
           />
         </label>
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && <p className={css.error}>{errors.email.message}</p>}
 
         <label className={css.boxBtn} htmlFor="password">
           <input
@@ -116,7 +124,9 @@ const RegisterForm = () => {
             )}
           </button>
         </label>
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && (
+          <p className={css.error}>{errors.password.message}</p>
+        )}
       </div>
       <button className={css.btn} type="submit">
         Sign Up

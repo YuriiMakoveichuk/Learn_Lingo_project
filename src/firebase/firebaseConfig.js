@@ -1,13 +1,11 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
 
-const API_KEY = import.meta.env.API_KEY;
-const AUTH_DOMAIN = import.meta.env.AUTH_DOMAIN;
-const PROJECT_ID = import.meta.env.PROJECT_ID;
-const STORAGE_BUCKET = import.meta.env.STORAGE_BUCKET;
-const MESSAGING_SENDER_ID = import.meta.env.MESSAGING_SENDER_ID;
-const APP_ID = import.meta.env.APP_ID;
+const API_KEY = import.meta.env.VITE_API_KEY;
+const AUTH_DOMAIN = import.meta.env.VITE_AUTH_DOMAIN;
+const PROJECT_ID = import.meta.env.VITE_PROJECT_ID;
+const STORAGE_BUCKET = import.meta.env.VITE_STORAGE_BUCKET;
+const MESSAGING_SENDER_ID = import.meta.env.VITE_MESSAGING_SENDER_ID;
+const APP_ID = import.meta.env.VITE_APP_ID;
 
 const firebaseConfig = {
   apiKey: API_KEY,
@@ -18,6 +16,4 @@ const firebaseConfig = {
   appId: APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
-
-export const db = getFirestore(app);
+initializeApp(firebaseConfig);

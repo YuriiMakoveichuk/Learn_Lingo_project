@@ -1,23 +1,34 @@
-import css from "./LoginForm.module.css";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { useState } from "react";
 
-import sprite from "../../assets/img/sprite.svg";
-import { useDispatch } from "react-redux";
-// import { closeModal } from "../../redux/modal.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { setUser } from "../../redux/auth/slice.js";
 import { closeModal } from "../../redux/modal.js";
 
+import sprite from "../../assets/img/sprite.svg";
+
+import css from "./LoginForm.module.css";
+
 const validateSchema = yup.object().shape({
-  email: yup.string().email().required("Email is required"),
+  email: yup
+    .string()
+    .email()
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Email must contain '@' and '.'")
+    .required("Email is required"),
   password: yup
     .string()
-    .min(6, "Password must be at least 6 characters")
+    .min(
+      6,
+      "Password must be at least 6 characters, with at least 2 of them being uppercase letters"
+    )
+    .matches(
+      /(?=.*[A-Z].*[A-Z])/,
+      "Password must contain at least 2 uppercase letters"
+    )
     .required("Password is required"),
 });
 
@@ -43,10 +54,8 @@ const LoginForm = () => {
     setPasswordVisible((prevState) => !prevState);
   };
 
-  const handleLogin = ({ email, password }) => {
+  const handleLogin = async ({ email, password }) => {
     const auth = getAuth();
-
-    console.log(password);
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -59,16 +68,12 @@ const LoginForm = () => {
           })
         );
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Error during registration:", error);
+      });
     dispatch(closeModal());
     reset();
   };
-
-  // const onSubmit = (data) => {
-  //   console.log(data);
-  //   dispatch(closeModal());
-  //   reset();
-  // };
 
   return (
     <form onSubmit={handleSubmit(handleLogin)} autoComplete="off" noValidate>
@@ -81,7 +86,7 @@ const LoginForm = () => {
             placeholder="Email"
           />
         </label>
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && <p className={css.error}>{errors.email.message}</p>}
 
         <label className={css.boxBtn} htmlFor="password">
           <input
@@ -108,7 +113,9 @@ const LoginForm = () => {
           </button>
         </label>
 
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && (
+          <p className={css.error}>{errors.password.message}</p>
+        )}
       </div>
       <button className={css.btn} type="submit">
         Log In

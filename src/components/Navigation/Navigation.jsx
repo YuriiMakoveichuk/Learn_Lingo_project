@@ -1,16 +1,20 @@
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
+
+import LoginModal from "../LoginModal/LoginModal.jsx";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
+
+import { openModal, selectIsOpenModal } from "../../redux/modal.js";
+
+import { useAuth } from "../../hooks/user.auth.js";
+
+import { removeUser } from "../../redux/auth/slice.js";
 
 import logo from "../../assets/img/ukraine.svg";
 import sprite from "../../assets/img/sprite.svg";
 
 import css from "./Navigation.module.css";
-import RegisterModal from "../RegisterModal/RegisterModal.jsx";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal, selectIsOpenModal } from "../../redux/modal.js";
-import LoginModal from "../LoginModal/LoginModal.jsx";
-import { useAuth } from "../../hooks/user.auth.js";
-import { removeUser } from "../../redux/auth/slice.js";
 
 const Navigation = () => {
   const dispatch = useDispatch();
