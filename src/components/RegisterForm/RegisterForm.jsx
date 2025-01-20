@@ -7,6 +7,8 @@ import { useState } from "react";
 import sprite from "../../assets/img/sprite.svg";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../redux/modal.js";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { setUser } from "../../redux/auth/slice.js";
 
 const validateSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -40,14 +42,35 @@ const RegisterForm = () => {
     setPasswordVisible((prevState) => !prevState);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleRegister = ({ email, password }) => {
+    const auth = getAuth();
+
+    console.log(password);
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            token: user.accessToken,
+          })
+        );
+      })
+      .catch(console.error);
     dispatch(closeModal());
     reset();
   };
 
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  //   dispatch(closeModal());
+  //   reset();
+  // };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" noValidate>
+    <form onSubmit={handleSubmit(handleRegister)} autoComplete="off" noValidate>
       <div className={css.box}>
         <label htmlFor="name">
           <input

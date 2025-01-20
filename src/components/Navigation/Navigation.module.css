@@ -68,6 +68,11 @@
   color: #f4c550;
 }
 
+.svg {
+  stroke: #f4c550;
+  fill: #f4c550;
+}
+
 .btnRegister {
   border-radius: 12px;
   padding: 14px 39px;
@@ -86,4 +91,16 @@
   background-color: #fff;
   color: #121417;
   border: 1px solid #121417;
+}
+
+.textEmail {
+  font-weight: 400;
+  line-height: 1.25;
+  color: #121417;
+}
+
+.textEmailSpan {
+  font-weight: 700;
+  line-height: 1.25;
+  color: #121417;
 }

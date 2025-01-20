@@ -7,6 +7,11 @@
 <path fill="none" stroke="#f4c550" style="stroke: var(--color1, #f4c550)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="3.2" d="M13.333 9.333l6.667 6.667M20 16l-6.667 6.667M20 16h-16"></path>
 </symbol>
 
+
+<symbol id="icon-log_out" viewBox="0 0 24 24">
+<path d="M3.984 5.016v13.969h8.016v2.016h-8.016q-0.797 0-1.383-0.609t-0.586-1.406v-13.969q0-0.797 0.586-1.406t1.383-0.609h8.016v2.016h-8.016zM17.016 6.984l4.969 5.016-4.969 5.016-1.406-1.453 2.578-2.578h-10.172v-1.969h10.172l-2.578-2.625z"></path>
+</symbol>
+
 <symbol id="icon-x" viewBox="0 0 32 32">
 <path fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4"  stroke-width="3.4286" stroke="inherit" d="M24 8l-16 16"></path>
 <path fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4"  stroke-width="3.4286" stroke="inherit" d="M8 8l16 16"></path>

@@ -9,9 +9,11 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import { userReducer } from "./auth/slice.js";
 
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     modal: modalReducer,
   },
 

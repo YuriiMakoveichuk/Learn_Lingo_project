@@ -8,10 +8,12 @@ import { useState } from "react";
 
 import sprite from "../../assets/img/sprite.svg";
 import { useDispatch } from "react-redux";
+// import { closeModal } from "../../redux/modal.js";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { setUser } from "../../redux/auth/slice.js";
 import { closeModal } from "../../redux/modal.js";
 
 const validateSchema = yup.object().shape({
-  name: yup.string().required("Name is required"),
   email: yup.string().email().required("Email is required"),
   password: yup
     .string()
@@ -41,14 +43,35 @@ const LoginForm = () => {
     setPasswordVisible((prevState) => !prevState);
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleLogin = ({ email, password }) => {
+    const auth = getAuth();
+
+    console.log(password);
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            token: user.accessToken,
+          })
+        );
+      })
+      .catch(console.error);
     dispatch(closeModal());
     reset();
   };
 
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  //   dispatch(closeModal());
+  //   reset();
+  // };
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} autoComplete="off" noValidate>
+    <form onSubmit={handleSubmit(handleLogin)} autoComplete="off" noValidate>
       <div className={css.box}>
         <label htmlFor="email">
           <input
