@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import "firebase/compat/firestore";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 const AUTH_DOMAIN = import.meta.env.VITE_AUTH_DOMAIN;
@@ -17,3 +18,7 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
+
+export const db = firebaseConfig.firestore;
+
+// export { db };

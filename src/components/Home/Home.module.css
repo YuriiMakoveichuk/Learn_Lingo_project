@@ -1,5 +1,6 @@
 .section {
   padding-bottom: 32px;
+  background-color: #fff;
 }
 
 .box {
@@ -12,6 +13,8 @@
 .boxText {
   width: 720px;
   padding: 98px 104px 98px 64px;
+  border-radius: 30px;
+  background-color: #f8f8f8;
 }
 
 .title {

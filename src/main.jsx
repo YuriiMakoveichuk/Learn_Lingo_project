@@ -10,12 +10,14 @@ import "./firebase/firebaseConfig.js";
 import App from "./App.jsx";
 
 import "./index.css";
+import { Toaster } from "react-hot-toast";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <App />
+        <Toaster />
       </Provider>
     </BrowserRouter>
   </StrictMode>

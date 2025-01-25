@@ -57,3 +57,7 @@ img {
 .no-scroll {
   overflow: hidden;
 }
+
+html {
+  overflow-y: scroll;
+}
