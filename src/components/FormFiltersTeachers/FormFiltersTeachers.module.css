@@ -14,7 +14,6 @@
   border-radius: 14px;
   border: inherit;
   padding: 14px 18px;
-  width: 198px;
   height: 48px;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
@@ -23,6 +22,18 @@
   line-height: 1.11111;
   color: #121417;
   outline: none;
+}
+
+.selectLanguages {
+  width: 221px;
+}
+
+.selectLevels {
+  width: 198px;
+}
+
+.selectPrice {
+  width: 124px;
 }
 
 .option {

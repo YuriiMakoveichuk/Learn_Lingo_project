@@ -31,8 +31,6 @@ const TeachersList = () => {
     }
   }, [dispatch, teachers]);
 
-  console.log(lastVisible);
-
   const loadMore = () => {
     dispatch(fetchTeachers({ startAfter: lastVisible, limit: PAGE_SIZE }))
       .unwrap()
