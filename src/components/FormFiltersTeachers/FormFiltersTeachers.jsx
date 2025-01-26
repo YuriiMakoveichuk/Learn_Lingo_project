@@ -1,19 +1,14 @@
-import clsx from "clsx";
 import { Container } from "../Container/Container.jsx";
-
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { useState, useEffect } from "react";
+import Select from "../Select/Select.jsx";
 
 import css from "./FormFiltersTeachers.module.css";
 
 const FormFiltersTeachers = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const methods = useForm();
+  const { handleSubmit } = methods;
   const onSubmit = (data) => console.log(data);
-  console.log(errors);
 
   const [selectedOptions, setSelectedOptions] = useState({
     languages: "French",
@@ -40,172 +35,64 @@ const FormFiltersTeachers = () => {
     });
   };
 
+  const languagesOptions = [
+    { value: "French", label: "French" },
+    { value: "English", label: "English" },
+    { value: "German", label: "German" },
+    { value: "Ukrainian", label: "Ukrainian" },
+    { value: "Polish", label: "Polish" },
+  ];
+
+  const levelsOptions = [
+    { value: "A1", label: "A1 Beginner" },
+    { value: "A2", label: "A2 Elementary" },
+    { value: "B1", label: "B1 Intermediate" },
+    { value: "B2", label: "B2 Upper-Intermediate" },
+  ];
+
+  const priceOptions = [
+    { value: "10", label: "10" },
+    { value: "20", label: "20" },
+    { value: "30", label: "30" },
+    { value: "40", label: "40" },
+  ];
+
   return (
-    <>
-      <Container>
+    <Container>
+      <FormProvider {...methods}>
         <form className={css.boxForm} onSubmit={handleSubmit(onSubmit)}>
-          <div className={css.boxSelect}>
-            <label className={css.label} htmlFor="languages">
-              Languages
-            </label>
-            <select
-              name="languages"
-              className={clsx(css.select, css.selectLanguages)}
-              {...register("languages", { required: true })}
-              onChange={handleChange}
-            >
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.languages === "French" && css.selectedOption
-                )}
-                value="French"
-              >
-                French
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.languages === "English" && css.selectedOption
-                )}
-                value="English"
-              >
-                English
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.languages === "German" && css.selectedOption
-                )}
-                value="German"
-              >
-                German
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.languages === "Ukrainian" &&
-                    css.selectedOption
-                )}
-                value="Ukrainian"
-              >
-                Ukrainian
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.languages === "Polish" && css.selectedOption
-                )}
-                value="Polish"
-              >
-                Polish
-              </option>
-            </select>
-          </div>
-          <div className={css.boxSelect}>
-            <label className={css.label} htmlFor="levels">
-              Level of knowledge
-            </label>
-            <select
-              name="levels"
-              className={clsx(css.select, css.selectLevels)}
-              {...register("levels", { required: true })}
-              onChange={handleChange}
-            >
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.levels === "A1" && css.selectedOption
-                )}
-                value="A1"
-              >
-                A1 Beginner
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.levels === "A2" && css.selectedOption
-                )}
-                value="A2"
-              >
-                A2 Elementary
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.levels === "B1" && css.selectedOption
-                )}
-                value="B1"
-              >
-                B1 Intermediate
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.levels === "B2" && css.selectedOption
-                )}
-                value="B2"
-              >
-                B2 Upper-Intermediate
-              </option>
-            </select>
-          </div>
-          <div className={css.boxSelect}>
-            <label className={css.label} htmlFor="price_per_hour">
-              Price
-            </label>
-            <select
-              name="price_per_hour"
-              className={clsx(css.select, css.selectPrice)}
-              {...register("price_per_hour", { required: true })}
-              onChange={handleChange}
-            >
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.price_per_hour === "10" && css.selectedOption
-                )}
-                value="10"
-              >
-                10
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.price_per_hour === "20" && css.selectedOption
-                )}
-                value="20"
-              >
-                20
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.price_per_hour === "30" && css.selectedOption
-                )}
-                value="30"
-              >
-                30
-              </option>
-              <option
-                className={clsx(
-                  css.option,
-                  selectedOptions.price_per_hour === "40" && css.selectedOption
-                )}
-                value="40"
-              >
-                40
-              </option>
-            </select>
-          </div>
+          <Select
+            name="languages"
+            label="Languages"
+            options={languagesOptions}
+            selectedValue={selectedOptions.languages}
+            onChange={handleChange}
+            classStyle={css.selectLanguages}
+          />
+          <Select
+            name="levels"
+            label="Level of knowledge"
+            options={levelsOptions}
+            selectedValue={selectedOptions.levels}
+            onChange={handleChange}
+            classStyle={css.selectLevels}
+          />
+          <Select
+            name="price_per_hour"
+            label="Price"
+            options={priceOptions}
+            selectedValue={selectedOptions.price_per_hour}
+            onChange={handleChange}
+            classStyle={css.selectPrice}
+          />
           <div className={css.boxBtn}>
             <button className={css.btnForm} type="submit">
               Search
             </button>
           </div>
         </form>
-      </Container>
-    </>
+      </FormProvider>
+    </Container>
   );
 };
 

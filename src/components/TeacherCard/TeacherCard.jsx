@@ -4,12 +4,36 @@ import sprite from "../../assets/img/sprite.svg";
 import { useState } from "react";
 
 import css from "./TeacherCard.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeModal,
+  openModal,
+  selectIsOpenModal,
+  selectModalType,
+} from "../../redux/modal.js";
+import BookModal from "../BookModal/BookModal.jsx";
 
 const TeacherCard = ({ teacher }) => {
+  const dispatch = useDispatch();
+
+  const isOpenModal = useSelector(selectIsOpenModal);
+  const modalType = useSelector(selectModalType);
+
   const [readLoad, setReadLoad] = useState(false);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
 
   const handleReadMoreClick = () => {
     setReadLoad(!readLoad);
+  };
+
+  const isOpenModalBook = () => {
+    setSelectedTeacher(teacher);
+    dispatch(openModal("book"));
+  };
+
+  const onCloseModal = () => {
+    setSelectedTeacher(null);
+    dispatch(closeModal("book"));
   };
 
   return (
@@ -135,12 +159,19 @@ const TeacherCard = ({ teacher }) => {
                   </li>
                 ))}
               </ul>
-              <button className={css.readLoadBtn} type="button">
+              <button
+                onClick={isOpenModalBook}
+                className={css.readLoadBtn}
+                type="button"
+              >
                 Book trial lesson
               </button>
             </>
           )}
         </div>
+        {isOpenModal && modalType === "book" && (
+          <BookModal teacher={selectedTeacher} onCloseModal={onCloseModal} />
+        )}
       </div>
     </>
   );
