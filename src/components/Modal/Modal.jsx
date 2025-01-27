@@ -15,8 +15,13 @@ export const Modal = ({ children, onCloseModal, top, transform, width }) => {
 
     window.addEventListener("keydown", handleKeyDown);
 
+    document.documentElement.classList.add("no-scroll");
+    document.body.classList.add("no-scroll");
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      document.documentElement.classList.remove("no-scroll");
+      document.body.classList.remove("no-scroll");
     };
   }, [onCloseModal]);
 

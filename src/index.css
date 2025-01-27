@@ -54,10 +54,19 @@ img {
   overflow: hidden;
 }
 
-.no-scroll {
-  overflow: hidden;
-}
-
 html {
   overflow-y: scroll;
+}
+
+html::before {
+  content: "";
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.no-scroll {
+  overflow: hidden;
+  padding-right: 10px;
 }
