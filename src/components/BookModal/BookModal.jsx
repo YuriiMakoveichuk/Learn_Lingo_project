@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
+
 import Modal from "../Modal/Modal.jsx";
-import css from "./BookModal.module.css";
 import BookForm from "../BookForm/BookForm.jsx";
+
+import css from "./BookModal.module.css";
 
 const BookModal = ({ teacher, onCloseModal }) => {
   const isOpenModal = useSelector((state) => state.modal.isOpen);

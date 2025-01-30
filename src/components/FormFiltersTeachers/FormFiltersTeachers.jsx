@@ -1,14 +1,18 @@
-import { Container } from "../Container/Container.jsx";
-import { useForm, FormProvider } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { useForm, FormProvider } from "react-hook-form";
+
+import { Container } from "../Container/Container.jsx";
 import Select from "../Select/Select.jsx";
+
+import { setFilters } from "../../redux/teachers/slice.js";
 
 import css from "./FormFiltersTeachers.module.css";
 
 const FormFiltersTeachers = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
-  const onSubmit = (data) => console.log(data);
+  const dispatch = useDispatch();
 
   const [selectedOptions, setSelectedOptions] = useState({
     languages: "French",
@@ -28,10 +32,12 @@ const FormFiltersTeachers = () => {
     const { name, value } = event.target;
 
     setSelectedOptions((prevSelectedOptions) => {
-      return {
+      const newOptions = {
         ...prevSelectedOptions,
         [name]: value,
       };
+      dispatch(setFilters(newOptions));
+      return newOptions;
     });
   };
 
@@ -60,7 +66,10 @@ const FormFiltersTeachers = () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <form className={css.boxForm} onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className={css.boxForm}
+          onSubmit={handleSubmit((data) => dispatch(setFilters(data)))}
+        >
           <Select
             name="languages"
             label="Languages"

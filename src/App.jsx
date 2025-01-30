@@ -1,10 +1,13 @@
-import HomePage from "./pages/HomePage/HomePage.jsx";
+import { Route, Routes } from "react-router-dom";
 
-import "./App.css";
+import HomePage from "./pages/HomePage/HomePage.jsx";
 import TeachersPage from "./pages/TeachersPage/TeachersPage.jsx";
 import FavoritesPage from "./pages/FavoritesPage/FavoritesPage.jsx";
-import { Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation.jsx";
+
+import { PrivateRoute } from "./components/PrivateRoute.jsx";
+
+import "./App.css";
 
 function App() {
   return (
@@ -14,7 +17,10 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/teachers" element={<TeachersPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route
+            path="/favorites"
+            element={<PrivateRoute component={<FavoritesPage />} />}
+          />
         </Routes>
       </main>
     </>

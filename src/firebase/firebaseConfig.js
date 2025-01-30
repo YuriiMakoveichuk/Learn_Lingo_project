@@ -1,4 +1,11 @@
 import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import "firebase/compat/firestore";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -17,8 +24,28 @@ const firebaseConfig = {
   appId: APP_ID,
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-export const db = firebaseConfig.firestore;
+const fetchTeachers = async (selectedLanguage) => {
+  try {
+    const teachersRef = collection(db, "teachers");
+    const q = query(
+      teachersRef,
+      where("languages", "array-contains", selectedLanguage)
+    );
+    const querySnapshot = await getDocs(q);
 
-// export { db };
+    const teachers = [];
+    querySnapshot.forEach((doc) => {
+      teachers.push({ id: doc.id, ...doc.data() });
+    });
+
+    console.log("Fetched Teachers:", teachers);
+    return teachers;
+  } catch (error) {
+    console.error("Error fetching teachers:", error);
+  }
+};
+
+fetchTeachers("French");

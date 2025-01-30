@@ -1,8 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
+
 import LoginForm from "../LoginForm/LoginForm.jsx";
 import Modal from "../Modal/Modal.jsx";
-import css from "./LoginModal.module.css";
+
 import { closeModal } from "../../redux/modal.js";
+
+import css from "./LoginModal.module.css";
 
 const LoginModal = () => {
   const dispatch = useDispatch();

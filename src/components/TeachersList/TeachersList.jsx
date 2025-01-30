@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import { fetchTeachers } from "../../redux/teachers/operations.js";
 import { Container } from "../Container/Container.jsx";
 import Loader from "../Loader/Loader.jsx";
@@ -10,6 +9,7 @@ import {
   selectLastVisible,
   selectLoading,
   selectTeachers,
+  selectFilters,
 } from "../../redux/teachers/selectors.js";
 
 import css from "./TeachersList.module.css";
@@ -22,17 +22,22 @@ const TeachersList = () => {
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const lastVisible = useSelector(selectLastVisible);
+  const filters = useSelector(selectFilters);
 
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
     if (teachers.length === 0) {
-      dispatch(fetchTeachers({ startAfter: 0, limit: PAGE_SIZE })).unwrap();
+      dispatch(
+        fetchTeachers({ startAfter: 0, limit: PAGE_SIZE, filters })
+      ).unwrap();
     }
-  }, [dispatch, teachers]);
+  }, [dispatch, teachers, filters]);
 
   const loadMore = () => {
-    dispatch(fetchTeachers({ startAfter: lastVisible, limit: PAGE_SIZE }))
+    dispatch(
+      fetchTeachers({ startAfter: lastVisible, limit: PAGE_SIZE, filters })
+    )
       .unwrap()
       .then((response) => {
         if (response.teachers.length < PAGE_SIZE) {

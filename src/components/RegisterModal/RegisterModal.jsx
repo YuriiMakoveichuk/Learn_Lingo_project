@@ -1,8 +1,11 @@
-import css from "./RegisterModal.module.css";
+import { useDispatch, useSelector } from "react-redux";
+
 import Modal from "../Modal/Modal.jsx";
 import RegisterForm from "../RegisterForm/RegisterForm.jsx";
-import { useDispatch, useSelector } from "react-redux";
+
 import { closeModal } from "../../redux/modal.js";
+
+import css from "./RegisterModal.module.css";
 
 const RegisterModal = () => {
   const dispatch = useDispatch();

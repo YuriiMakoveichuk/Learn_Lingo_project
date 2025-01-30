@@ -1,26 +1,43 @@
-import clsx from "clsx";
-import sprite from "../../assets/img/sprite.svg";
-
 import { useState } from "react";
-
-import css from "./TeacherCard.module.css";
+import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
+
+import BookModal from "../BookModal/BookModal.jsx";
+
 import {
   closeModal,
   openModal,
   selectIsOpenModal,
   selectModalType,
 } from "../../redux/modal.js";
-import BookModal from "../BookModal/BookModal.jsx";
+import { useAuth } from "../../hooks/user.auth.js";
+import { toggleLike } from "../../redux/auth/slice.js";
+
+import sprite from "../../assets/img/sprite.svg";
+
+import css from "./TeacherCard.module.css";
 
 const TeacherCard = ({ teacher }) => {
   const dispatch = useDispatch();
+
+  const { isAuth } = useAuth();
 
   const isOpenModal = useSelector(selectIsOpenModal);
   const modalType = useSelector(selectModalType);
 
   const [readLoad, setReadLoad] = useState(false);
   const [selectedTeacher, setSelectedTeacher] = useState(null);
+
+  const likes = useSelector((state) => state.user.likes);
+
+  const isLike = likes && likes.includes(teacher.id);
+
+  const handleFavoriteClick = () => {
+    if (!isAuth) {
+      dispatch(openModal("login"));
+    }
+    dispatch(toggleLike(teacher.id));
+  };
 
   const handleReadMoreClick = () => {
     setReadLoad(!readLoad);
@@ -88,7 +105,12 @@ const TeacherCard = ({ teacher }) => {
                   </p>
                 </li>
               </ul>
-              <svg className={css.svg} width={26} height={26}>
+              <svg
+                className={clsx(`${css.svg} ${isLike ? css.like : ""}`)}
+                width={26}
+                height={26}
+                onClick={handleFavoriteClick}
+              >
                 <use href={`${sprite}#icon-heart`}></use>
               </svg>
             </div>

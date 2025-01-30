@@ -5,7 +5,11 @@ import clsx from "clsx";
 import LoginModal from "../LoginModal/LoginModal.jsx";
 import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 
-import { openModal, selectIsOpenModal } from "../../redux/modal.js";
+import {
+  openModal,
+  selectIsOpenModal,
+  selectModalType,
+} from "../../redux/modal.js";
 
 import { useAuth } from "../../hooks/user.auth.js";
 
@@ -21,7 +25,7 @@ const Navigation = () => {
   const { isAuth, email } = useAuth();
   const isOpenModal = useSelector(selectIsOpenModal);
 
-  const modalType = useSelector((state) => state.modal.modalType);
+  const modalType = useSelector(selectModalType);
 
   const isOpenModalRegister = () => {
     dispatch(openModal("register"));

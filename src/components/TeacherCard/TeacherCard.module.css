@@ -205,3 +205,8 @@
 .readLoadBtn:focus {
   background-color: #ffdc86;
 }
+
+.like {
+  stroke: #f4c550;
+  fill: #f4c550;
+}
