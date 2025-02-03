@@ -6,6 +6,7 @@ import Loader from "../Loader/Loader.jsx";
 import TeacherCard from "../TeacherCard/TeacherCard.jsx";
 import {
   selectError,
+  selectFilters,
   selectLastVisible,
   selectLoading,
   selectTeachers,
@@ -13,7 +14,7 @@ import {
 
 import css from "./TeachersList.module.css";
 
-const PAGE_SIZE = 4;
+// const PAGE_SIZE = 4;
 
 const TeachersList = () => {
   const dispatch = useDispatch();
@@ -21,18 +22,27 @@ const TeachersList = () => {
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const lastVisible = useSelector(selectLastVisible);
+  const filters = useSelector(selectFilters);
 
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    dispatch(fetchTeachers({ startAfter: 0, limit: PAGE_SIZE })).unwrap();
-  }, [dispatch]);
+    setHasMore(true);
+
+    console.log("Filters:", filters);
+
+    dispatch(fetchTeachers({ startAfter: 0, filters })).unwrap();
+  }, [dispatch, filters]);
+
+  useEffect(() => {
+    console.log("Teachers:", teachers);
+  }, [teachers]);
 
   const loadMore = () => {
-    dispatch(fetchTeachers({ startAfter: lastVisible, limit: PAGE_SIZE }))
+    dispatch(fetchTeachers({ startAfter: lastVisible, filters }))
       .unwrap()
       .then((response) => {
-        if (response.teachers.length < PAGE_SIZE) {
+        if (response.teachers.length < 4) {
           setHasMore(false);
         }
       });

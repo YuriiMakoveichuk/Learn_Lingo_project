@@ -55,7 +55,6 @@ export const getFilteredTeachers = async (filters) => {
     }
 
     const newLanguage = teacher.languages.includes(filters.languages);
-
     const newLevel = teacher.levels.includes(filters.levels);
 
     if (newPrice && newLanguage && newLevel) {

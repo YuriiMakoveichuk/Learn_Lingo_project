@@ -6,11 +6,22 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   lastVisible: null,
+  filters: {
+    languages: "French",
+    levels: "A1 Beginner",
+    price_per_hour: "10",
+  },
 };
 
 const teachersSlice = createSlice({
   name: "teachers",
   initialState: INITIAL_STATE,
+  reducers: {
+    setFilters: (state, action) => {
+      state.filters = action.payload;
+    },
+  },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchTeachers.pending, (state) => {
@@ -36,4 +47,6 @@ const teachersSlice = createSlice({
       });
   },
 });
+
+export const { setFilters } = teachersSlice.actions;
 export const teachersReducer = teachersSlice.reducer;

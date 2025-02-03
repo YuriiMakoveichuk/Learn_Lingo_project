@@ -3,9 +3,12 @@ import { useForm, FormProvider } from "react-hook-form";
 import { Container } from "../Container/Container.jsx";
 import Select from "../Select/Select.jsx";
 import css from "./FormFiltersTeachers.module.css";
-import { getFilteredTeachers } from "../../firebase/firebaseConfig.js";
+import { useDispatch } from "react-redux";
+import { fetchTeachers } from "../../redux/teachers/operations.js";
+import { setFilters } from "../../redux/teachers/slice.js";
 
 const FormFiltersTeachers = () => {
+  const dispatch = useDispatch();
   const methods = useForm();
   const { handleSubmit } = methods;
 
@@ -34,7 +37,6 @@ const FormFiltersTeachers = () => {
       return newOptions;
     });
   };
-
   const onSubmit = async (data) => {
     const filters = {
       price_range: data.price_per_hour,
@@ -42,8 +44,8 @@ const FormFiltersTeachers = () => {
       levels: data.levels,
     };
     try {
-      const filteredTeachers = await getFilteredTeachers(filters);
-      console.log("data", filteredTeachers);
+      dispatch(setFilters(filters));
+      dispatch(fetchTeachers());
     } catch (error) {
       console.error("Error fetching filtered teachers:", error);
     }

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { getFilteredTeachers } from "../../firebase/firebaseConfig.js";
 
 export const INSTANCE = axios.create({
   baseURL:
@@ -8,24 +9,22 @@ export const INSTANCE = axios.create({
 
 export const fetchTeachers = createAsyncThunk(
   "teachers/fetchAll",
-  async ({ startAfter, limit }, thunkApi) => {
+  async ({ startAfter, limit = 4, filters }, thunkApi) => {
     try {
-      const response = await INSTANCE.get("/teachers.json");
+      const filteredTeachers = await getFilteredTeachers(filters);
 
-      const data = response.data;
+      console.log("Filtered teachers after backend call:", filteredTeachers);
 
-      const teachersArray = Object.keys(data).map((key) => ({
-        id: key,
-        ...data[key],
-      }));
       const startIndex = startAfter
-        ? teachersArray.findIndex((teacher) => teacher.id === startAfter) + 1
+        ? filteredTeachers.findIndex((teacher) => teacher.id === startAfter) + 1
         : 0;
 
-      const paginatedTeachers = teachersArray.slice(
+      const paginatedTeachers = filteredTeachers.slice(
         startIndex,
         startIndex + limit
       );
+
+      console.log(paginatedTeachers);
 
       return {
         teachers: paginatedTeachers,
