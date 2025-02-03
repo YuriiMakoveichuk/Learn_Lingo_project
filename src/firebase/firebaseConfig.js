@@ -63,6 +63,5 @@ export const getFilteredTeachers = async (filters) => {
     }
   });
 
-  console.log("Filtered Teachers: ", teachers);
   return teachers;
 };

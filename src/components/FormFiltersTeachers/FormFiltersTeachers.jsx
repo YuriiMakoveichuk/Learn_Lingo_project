@@ -43,7 +43,7 @@ const FormFiltersTeachers = () => {
     };
     try {
       const filteredTeachers = await getFilteredTeachers(filters);
-      console.log(filteredTeachers);
+      console.log("data", filteredTeachers);
     } catch (error) {
       console.error("Error fetching filtered teachers:", error);
     }
