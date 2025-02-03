@@ -1,41 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAllTeachers, fetchTeachers } from "./operations.js";
+import { fetchTeachers } from "./operations.js";
 
 const INITIAL_STATE = {
   items: [],
   loading: false,
   error: null,
   lastVisible: null,
-  filters: {
-    languages: "French",
-    levels: "A1",
-    price_per_hour: "10",
-  },
 };
 
 const teachersSlice = createSlice({
   name: "teachers",
   initialState: INITIAL_STATE,
-  reducers: {
-    setFilters: (state, action) => {
-      state.filters = action.payload;
-    },
-  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAllTeachers.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchAllTeachers.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.items = action.payload;
-      })
-      .addCase(fetchAllTeachers.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-
       .addCase(fetchTeachers.pending, (state) => {
         state.loading = true;
       })
@@ -59,5 +36,4 @@ const teachersSlice = createSlice({
       });
   },
 });
-export const { setFilters } = teachersSlice.actions;
 export const teachersReducer = teachersSlice.reducer;

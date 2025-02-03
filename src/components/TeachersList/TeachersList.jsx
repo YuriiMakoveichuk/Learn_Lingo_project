@@ -9,7 +9,6 @@ import {
   selectLastVisible,
   selectLoading,
   selectTeachers,
-  selectFilters,
 } from "../../redux/teachers/selectors.js";
 
 import css from "./TeachersList.module.css";
@@ -22,22 +21,15 @@ const TeachersList = () => {
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const lastVisible = useSelector(selectLastVisible);
-  const filters = useSelector(selectFilters);
 
   const [hasMore, setHasMore] = useState(true);
 
   useEffect(() => {
-    if (teachers.length === 0) {
-      dispatch(
-        fetchTeachers({ startAfter: 0, limit: PAGE_SIZE, filters })
-      ).unwrap();
-    }
-  }, [dispatch, teachers, filters]);
+    dispatch(fetchTeachers({ startAfter: 0, limit: PAGE_SIZE })).unwrap();
+  }, [dispatch]);
 
   const loadMore = () => {
-    dispatch(
-      fetchTeachers({ startAfter: lastVisible, limit: PAGE_SIZE, filters })
-    )
+    dispatch(fetchTeachers({ startAfter: lastVisible, limit: PAGE_SIZE }))
       .unwrap()
       .then((response) => {
         if (response.teachers.length < PAGE_SIZE) {

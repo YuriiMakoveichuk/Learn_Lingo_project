@@ -1,31 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import { Container } from "../../components/Container/Container.jsx";
 import Loader from "../../components/Loader/Loader.jsx";
 import TeacherCard from "../../components/TeacherCard/TeacherCard.jsx";
+import { Container } from "../../components/Container/Container.jsx";
 
+import css from "./FavoritesPage.module.css";
 import {
   selectError,
   selectLoading,
-  selectTeachers,
-} from "../../redux/teachers/selectors.js";
-import { fetchAllTeachers } from "../../redux/teachers/operations.js";
-
-import css from "./FavoritesPage.module.css";
+  selectTeachersAll,
+} from "../../redux/favorite/selector.js";
+import { fetchTeachersAll } from "../../redux/favorite/operation.js";
 
 const FavoritesPage = () => {
   const dispatch = useDispatch();
-  const teachers = useSelector(selectTeachers);
+  const teachersAll = useSelector(selectTeachersAll);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const likes = useSelector((state) => state.user.likes);
 
   useEffect(() => {
-    dispatch(fetchAllTeachers());
+    dispatch(fetchTeachersAll());
   }, [dispatch]);
 
-  const savedTeachers = teachers.filter((teacher) =>
+  const savedTeachers = teachersAll.filter((teacher) =>
     likes.includes(teacher.id)
   );
 

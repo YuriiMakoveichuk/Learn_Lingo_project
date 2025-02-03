@@ -11,11 +11,13 @@ import {
 } from "redux-persist";
 import { userReducer } from "./auth/slice.js";
 import { teachersReducer } from "./teachers/slice.js";
+import { teachersAllReducer } from "./favorite/slice.js";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     teachers: teachersReducer,
+    teachersAll: teachersAllReducer,
     modal: modalReducer,
   },
 

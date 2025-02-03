@@ -1,30 +1,25 @@
-import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-
 import { Container } from "../Container/Container.jsx";
 import Select from "../Select/Select.jsx";
-
-import { setFilters } from "../../redux/teachers/slice.js";
-
 import css from "./FormFiltersTeachers.module.css";
+import { getFilteredTeachers } from "../../firebase/firebaseConfig.js";
 
 const FormFiltersTeachers = () => {
   const methods = useForm();
   const { handleSubmit } = methods;
-  const dispatch = useDispatch();
 
   const [selectedOptions, setSelectedOptions] = useState({
     languages: "French",
-    levels: "A1",
     price_per_hour: "10",
+    levels: "A1 Beginner",
   });
 
   useEffect(() => {
     setSelectedOptions({
       languages: "French",
-      levels: "A1",
       price_per_hour: "10",
+      levels: "A1 Beginner",
     });
   }, []);
 
@@ -36,9 +31,22 @@ const FormFiltersTeachers = () => {
         ...prevSelectedOptions,
         [name]: value,
       };
-      dispatch(setFilters(newOptions));
       return newOptions;
     });
+  };
+
+  const onSubmit = async (data) => {
+    const filters = {
+      price_range: data.price_per_hour,
+      languages: data.languages,
+      levels: data.levels,
+    };
+    try {
+      const filteredTeachers = await getFilteredTeachers(filters);
+      console.log(filteredTeachers);
+    } catch (error) {
+      console.error("Error fetching filtered teachers:", error);
+    }
   };
 
   const languagesOptions = [
@@ -50,10 +58,10 @@ const FormFiltersTeachers = () => {
   ];
 
   const levelsOptions = [
-    { value: "A1", label: "A1 Beginner" },
-    { value: "A2", label: "A2 Elementary" },
-    { value: "B1", label: "B1 Intermediate" },
-    { value: "B2", label: "B2 Upper-Intermediate" },
+    { value: "A1 Beginner", label: "A1 Beginner" },
+    { value: "A2 Elementary", label: "A2 Elementary" },
+    { value: "B1 Intermediate", label: "B1 Intermediate" },
+    { value: "B2 Upper-Intermediate", label: "B2 Upper-Intermediate" },
   ];
 
   const priceOptions = [
@@ -66,10 +74,7 @@ const FormFiltersTeachers = () => {
   return (
     <Container>
       <FormProvider {...methods}>
-        <form
-          className={css.boxForm}
-          onSubmit={handleSubmit((data) => dispatch(setFilters(data)))}
-        >
+        <form className={css.boxForm} onSubmit={handleSubmit(onSubmit)}>
           <Select
             name="languages"
             label="Languages"

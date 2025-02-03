@@ -6,19 +6,6 @@ export const INSTANCE = axios.create({
     "https://react-learn-lingo-default-rtdb.europe-west1.firebasedatabase.app",
 });
 
-export const fetchAllTeachers = createAsyncThunk(
-  "teachers/fetchAllTeachers",
-  async (__, thunkApi) => {
-    try {
-      const response = await INSTANCE.get("/teachers.json");
-      const data = response.data;
-      return data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    }
-  }
-);
-
 export const fetchTeachers = createAsyncThunk(
   "teachers/fetchAll",
   async ({ startAfter, limit }, thunkApi) => {
