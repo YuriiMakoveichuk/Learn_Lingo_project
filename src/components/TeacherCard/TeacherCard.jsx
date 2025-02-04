@@ -145,7 +145,7 @@ const TeacherCard = ({ teacher }) => {
               <ul className={css.listLevel}>
                 {teacher.levels.map((level, index) => (
                   <li className={css.itemLevel} key={index}>
-                    {level}
+                    #{level}
                   </li>
                 ))}
               </ul>
@@ -177,7 +177,7 @@ const TeacherCard = ({ teacher }) => {
               <ul className={css.listLevel}>
                 {teacher.levels.map((level, index) => (
                   <li className={css.itemLevel} key={index}>
-                    {level}
+                    #{level}
                   </li>
                 ))}
               </ul>

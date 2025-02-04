@@ -141,6 +141,10 @@
   color: #121417;
 }
 
+.itemLevel:first-child {
+  background-color: #f4c550;
+}
+
 .readLoadText {
   font-weight: 400;
   color: #121417;
