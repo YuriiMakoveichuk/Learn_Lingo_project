@@ -34,11 +34,15 @@ const FavoritesPage = () => {
       {error && <div>Error: {error}</div>}
       <Container>
         <ul className={css.list}>
-          {savedTeachers.map((teacher) => (
-            <li key={teacher.id}>
-              <TeacherCard teacher={teacher} />
-            </li>
-          ))}
+          {savedTeachers.length !== 0 ? (
+            savedTeachers.map((teacher) => (
+              <li key={teacher.id}>
+                <TeacherCard teacher={teacher} />
+              </li>
+            ))
+          ) : (
+            <p className={css.text}>You have no favorite teachers.</p>
+          )}
         </ul>
       </Container>
     </>

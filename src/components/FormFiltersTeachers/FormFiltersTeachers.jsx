@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
+import { useDispatch } from "react-redux";
+
 import { Container } from "../Container/Container.jsx";
 import Select from "../Select/Select.jsx";
-import css from "./FormFiltersTeachers.module.css";
-import { useDispatch } from "react-redux";
 import { fetchTeachers } from "../../redux/teachers/operations.js";
 import { setFilters } from "../../redux/teachers/slice.js";
+
+import css from "./FormFiltersTeachers.module.css";
 
 const FormFiltersTeachers = () => {
   const dispatch = useDispatch();
