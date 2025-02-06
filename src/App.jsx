@@ -14,9 +14,6 @@ const NotFoundPage = lazy(() =>
   import("./pages/NotFoundPage/NotFoundPage.jsx")
 );
 
-// import HomePage from "./pages/HomePage/HomePage.jsx";
-// import TeachersPage from "./pages/TeachersPage/TeachersPage.jsx";
-// import FavoritesPage from "./pages/FavoritesPage/FavoritesPage.jsx";
 import Navigation from "./components/Navigation/Navigation.jsx";
 
 import { PrivateRoute } from "./components/PrivateRoute.jsx";
