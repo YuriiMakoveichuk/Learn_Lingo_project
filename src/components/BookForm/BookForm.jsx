@@ -39,8 +39,7 @@ const BookForm = () => {
     reset,
   } = methods;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = () => {
     toast.success("Book trial lesson successful!");
     dispatch(closeModal());
     reset();
