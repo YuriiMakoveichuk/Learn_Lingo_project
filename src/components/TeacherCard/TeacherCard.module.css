@@ -85,6 +85,7 @@
   stroke: #121417;
   fill: white;
   cursor: pointer;
+  transition: all 250ms linear;
 }
 
 .textInfo {
